@@ -181,6 +181,7 @@ public class App {
             printMatrix('b');
             int[] choice = input();
             reveal(choice[0],choice[1]);
+            checkWin();
         }
 
         if(won){
