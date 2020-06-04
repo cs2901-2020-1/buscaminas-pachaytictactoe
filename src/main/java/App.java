@@ -6,10 +6,17 @@ public class App {
     private static final int SIZE = 9;
     static int[][] mine_board = new int[9][9];
     static char[][] player_board = new char[9][9];
+    static boolean won = true;
     static boolean playing = true;
 
     static void gameOver(){
+        printMatrix('b');
         System.out.println("Game over!\n");
+    }
+
+    static void youWon(){
+        printMatrix('b');
+        System.out.println("You win!\n");
     }
 
     static boolean exist(int x, int y){
@@ -88,8 +95,8 @@ public class App {
             }
             else {
                 player_board[x][y]='X';
-                printMatrix('b');
                 playing = false;
+                won = false;
             }
         }
     }
@@ -102,9 +109,10 @@ public class App {
         int y;
 
         System.out.println("Input X coordinate: ");
-        x = in.nextInt();
-        System.out.println("Input Y coordinate: ");
         y = in.nextInt();
+        System.out.println("Input Y coordinate: ");
+        x = in.nextInt();
+
 
         coords[0] = x;
         coords[1] = y;
@@ -152,15 +160,36 @@ public class App {
         }
     }
 
+    static void checkWin(){
+        for(int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if(mine_board[i][j] == 0 && player_board[i][j] == '-'){
+                    return;
+                }
+            }
+        }
+        won = true;
+        playing = false;
+    }
+
     public static void main(String[] args){
+
         initBoard();
         printMatrix('a');
+
         while(playing){
             printMatrix('b');
             int[] choice = input();
             reveal(choice[0],choice[1]);
         }
-        System.out.println("Hola munda");
+
+        if(won){
+            youWon();
+        }
+        else{
+            gameOver();
+        }
+
     }
 
 }
